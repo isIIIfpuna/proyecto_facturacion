@@ -1,0 +1,176 @@
+{
+	"info": {
+		"_postman_id": "41e81458-7b72-44b5-83b8-c2f0ce0a000c",
+		"name": "backend_inge_3",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "4644615"
+	},
+	"item": [
+		{
+			"name": "customer",
+			"item": [
+				{
+					"name": "obtener_cliente_por_id",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/backend-inge3/customer/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"backend-inge3",
+								"customer",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "insertar_cliente",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"address\":\"J. Augusto Saldivar\",\r\n   \"email\":\"miguelangelmendoza@outlook.es\",\r\n   \"name\":\"Miguel Mendoza\",\r\n   \"phone\":\"0982034669\",\r\n   \"ci_ruc\":\"5028491-6\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/backend-inge3/customer",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"backend-inge3",
+								"customer"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "invoice",
+			"item": [
+				{
+					"name": "insertar_factura_contado",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"customer_id\": 1,\r\n   \"total_amount\": 5000.80,\r\n   \"payment_type\": \"CO\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/backend-inge3/invoice/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"backend-inge3",
+								"invoice",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obtener_factura_por_id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/backend-inge3/invoice/4",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"backend-inge3",
+								"invoice",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "insertar_factura_credito",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"customer_id\": 1,\r\n   \"total_amount\": 5000.80,\r\n   \"payment_type\": \"CR\",\r\n   \"installment_count\": 4,\r\n   \"installment_days\": \"5,15,25,30\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/backend-inge3/invoice",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"backend-inge3",
+								"invoice"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "installment",
+			"item": []
+		}
+	]
+}
