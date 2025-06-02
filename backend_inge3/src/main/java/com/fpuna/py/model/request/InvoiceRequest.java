@@ -15,6 +15,7 @@ public class InvoiceRequest implements Serializable {
 
     @JsonProperty(value = "customer_id")
     private Integer customerId;
+    private String date;
     @JsonProperty(value = "total_amount")
     private BigDecimal totalAmount;
     @JsonProperty(value = "payment_type")
@@ -23,5 +24,6 @@ public class InvoiceRequest implements Serializable {
     private Integer installmentCount;
     @JsonProperty(value = "installment_days")
     private String installmentDays;
+    private String status;
 }
 

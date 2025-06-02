@@ -6,19 +6,18 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CustomerResponse implements Serializable {
+public class ProductResponse implements Serializable {
 
-    @JsonProperty(value = "customer_id")
-    private Integer customerId;
+    @JsonProperty(value = "product_id")
+    private Integer productId;
     private String name;
-    @JsonProperty(value = "ci_ruc")
-    private String ciRuc;
-    private String email;
-    private String phone;
-    private String address;
+    private String description;
+    private BigDecimal price;
+    private Integer stock;
 }
 

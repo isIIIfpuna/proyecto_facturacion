@@ -4,7 +4,7 @@ import com.fpuna.py.entity.Installment;
 import com.fpuna.py.model.response.InstallmentResponse;
 import com.fpuna.py.repository.InstallmentRepository;
 import com.fpuna.py.service.InstallmentService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.fpuna.py.util.MethodUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,8 +12,11 @@ import java.util.List;
 @Service
 public class InstallmentServiceImpl implements InstallmentService {
 
-    @Autowired
-    InstallmentRepository installmentRepository;
+    final InstallmentRepository installmentRepository;
+
+    public InstallmentServiceImpl(InstallmentRepository installmentRepository) {
+        this.installmentRepository = installmentRepository;
+    }
 
     @Override
     public List<InstallmentResponse> getInstallmentsByInvoice(Integer invoiceId) {
@@ -24,8 +27,9 @@ public class InstallmentServiceImpl implements InstallmentService {
                         inst.getInvoice().getId(),
                         inst.getInstallmentNumber(),
                         inst.getAmount(),
-                        inst.getDueDate(),
-                        inst.getPaid()))
+                        MethodUtils.convertLocalDateToString(inst.getDueDate()),
+                        inst.getPaid(),
+                        MethodUtils.convertLocalDateToString(inst.getPaymentDate())))
                 .toList();
     }
 }

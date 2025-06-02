@@ -22,7 +22,9 @@ public class InstallmentResponse implements Serializable {
     private Integer installmentNumber;
     private BigDecimal amount;
     @JsonProperty(value = "due_date")
-    private LocalDate dueDate;
-    private Boolean paid;
+    private String dueDate;
+    private boolean paid;
+    @JsonProperty(value = "payment_date")
+    private String paymentDate;
 }
 

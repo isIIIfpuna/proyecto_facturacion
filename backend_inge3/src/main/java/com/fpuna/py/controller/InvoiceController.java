@@ -20,7 +20,7 @@ public class InvoiceController {
 
     private static final Logger LOGGER = LogManager.getLogger(InvoiceController.class);
 
-    private static final String FIND_INVOICE_BY_ID = "/{id}";
+    private static final String INVOICE_ID = "/{invoice_id}";
 
     @Autowired
     private InvoiceService invoiceService;
@@ -29,12 +29,8 @@ public class InvoiceController {
     public ResponseEntity<InvoiceResponse> createInvoice(@RequestBody InvoiceRequest request) {
         LOGGER.info("Received request to create invoice: {}", request);
         try {
-            InvoiceResponse response = invoiceService.createInvoice(request);
-            if (Objects.isNull(response)) {
-                LOGGER.warn("Invoice creation failed, customer not found");
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-            }
-            return ResponseEntity.ok(response);
+            invoiceService.createInvoice(request);
+            return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (InvalidInstallmentException ex) {
             LOGGER.error("Failed to create invoice", ex);
             return ResponseEntity.unprocessableEntity().body(null);

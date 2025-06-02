@@ -10,13 +10,9 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CustomerRequest implements Serializable {
+public class InvoiceUpdateRequest extends InvoiceRequest implements Serializable {
 
-    private String name;
-    @JsonProperty(value = "ci_ruc")
-    private String ciRuc;
-    private String email;
-    private String phone;
-    private String address;
+    @JsonProperty(value = "invoice_id")
+    private Integer invoiceId;
 }
 

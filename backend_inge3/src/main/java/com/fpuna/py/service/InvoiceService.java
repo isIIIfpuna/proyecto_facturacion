@@ -1,12 +1,20 @@
 package com.fpuna.py.service;
 
-import com.fpuna.py.model.exception.InvalidInstallmentException;
 import com.fpuna.py.model.request.InvoiceRequest;
+import com.fpuna.py.model.request.InvoiceUpdateRequest;
 import com.fpuna.py.model.response.InvoiceResponse;
+
+import java.util.List;
 
 public interface InvoiceService {
 
-    InvoiceResponse createInvoice(InvoiceRequest request) throws InvalidInstallmentException;
+    void createInvoice(InvoiceRequest invoiceRequest) throws Exception;
 
-    InvoiceResponse getInvoice(Integer request);
+    void updateInvoice(InvoiceUpdateRequest invoiceUpdateRequest);
+
+    void deleteInvoice(Integer invoiceId);
+
+    InvoiceResponse getInvoice(Integer invoiceId);
+
+    List<InvoiceResponse> getInvoices();
 }

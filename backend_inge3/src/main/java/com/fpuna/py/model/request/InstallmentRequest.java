@@ -20,5 +20,8 @@ public class InstallmentRequest implements Serializable {
     private BigDecimal amount;
     @JsonProperty(value = "due_date")
     private String dueDate;
+    private boolean paid;
+    @JsonProperty(value = "payment_date")
+    private String paymentDate;
 }
 
