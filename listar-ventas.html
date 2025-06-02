@@ -13,7 +13,7 @@
     <div class="container p-0"> 
         <div class="container p-0 d-flex justify-content-between align-items-center mb-3">
           <h3 class="titulo-ventas text-white m-0">Ventas</h3>
-          <button class="btn btn-registro">Nuevo Registro</button>
+          <button class="btn btn-registro" onclick="window.location.href='form-ventas.html'">Nuevo Registro</button>
         </div>
     </div>      
       
@@ -97,9 +97,9 @@
     console.log("Editar pedido", id);
   }
   function verPedido(id) {
-    // Función vacía para ver pedido
-    console.log("Ver pedido", id);
+  window.location.href = 'venta-detail.html';
   }
+
 </script>
 </body>
 </html>
