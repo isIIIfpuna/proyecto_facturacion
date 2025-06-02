@@ -41,3 +41,27 @@ h3, h4 {
     border-radius: 8px;
     color: white;
 }
+
+.titulo-ventas {
+    display: inline-block;
+    width: calc(100% * 4.2 / 5); /* 4/5 del ancho total (porque 5 columnas) */
+    text-align: center;
+}
+  
+.btn-registro {
+    background-color: #003cffc2;
+    color: white;    
+    padding: 15px 35px;
+    margin-left: -10px;
+    border: none;
+    height: 100%;
+    font-size: 16px;
+    border-radius: 0px;
+    transition: background-color 0.2s ease; /* transición suave */
+}
+
+.btn-registro:hover {
+    background-color: #0026a0c2; /* un azul más oscuro al pasar el mouse */
+    cursor: pointer;
+    color: white;  
+}
