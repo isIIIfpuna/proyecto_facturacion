@@ -61,8 +61,7 @@ public class CustomerServiceImpl implements CustomerService {
                     customerResponse.setCiRuc(customer.getCiRuc());
                     customerResponse.setAddress(customer.getAddress());
                     return customerResponse;
-                })
-                .orElseThrow(() -> new EntityNotFoundException("Cliente no encontrado con ID: " + customerId));
+                }).orElse(null);
     }
 
     @Override

@@ -1,17 +1,16 @@
 package com.fpuna.py.controller;
 
-import com.fpuna.py.model.exception.InvalidInstallmentException;
 import com.fpuna.py.model.request.InvoiceRequest;
 import com.fpuna.py.model.response.InvoiceResponse;
 import com.fpuna.py.service.InvoiceService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Objects;
 
 @RestController
@@ -22,8 +21,11 @@ public class InvoiceController {
 
     private static final String INVOICE_ID = "/{invoice_id}";
 
-    @Autowired
-    private InvoiceService invoiceService;
+    private final InvoiceService invoiceService;
+
+    public InvoiceController(InvoiceService invoiceService) {
+        this.invoiceService = invoiceService;
+    }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<InvoiceResponse> createInvoice(@RequestBody InvoiceRequest request) {
@@ -31,17 +33,14 @@ public class InvoiceController {
         try {
             invoiceService.createInvoice(request);
             return new ResponseEntity<>(HttpStatus.CREATED);
-        } catch (InvalidInstallmentException ex) {
-            LOGGER.error("Failed to create invoice", ex);
-            return ResponseEntity.unprocessableEntity().body(null);
         } catch (Exception e) {
             LOGGER.error("Error creating invoice", e);
             return ResponseEntity.internalServerError().build();
         }
     }
 
-    @GetMapping(value = FIND_INVOICE_BY_ID, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<InvoiceResponse> getInvoice(@PathVariable Integer id) {
+    @GetMapping(value = INVOICE_ID, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getInvoice(@PathVariable Integer id) {
         LOGGER.info("Received request to get invoice with ID: {}", id);
         try {
             InvoiceResponse response = invoiceService.getInvoice(id);
@@ -56,6 +55,18 @@ public class InvoiceController {
         }
     }
 
-
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getInvoices() {
+        try {
+            List<InvoiceResponse> response = invoiceService.getInvoices();
+            if (Objects.isNull(response)) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            LOGGER.error("Error retrieving invoices ", e);
+            return ResponseEntity.internalServerError().build();
+        }
+    }
 }
 

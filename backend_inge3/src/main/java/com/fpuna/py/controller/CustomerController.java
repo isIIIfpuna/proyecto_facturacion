@@ -53,7 +53,7 @@ public class CustomerController {
         }
     }
 
-    @DeleteMapping(value = CUSTOMER_ID, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping(value = CUSTOMER_ID, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> deleteCustomer(@PathVariable("customer_id") Integer customerId) {
         LOGGER.info("Received request to delete customer: {}", customerId);
         try {
@@ -66,7 +66,7 @@ public class CustomerController {
         }
     }
 
-    @GetMapping(value = CUSTOMER_ID, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = CUSTOMER_ID, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getCustomerById(@PathVariable("customer_id") Integer customerId) {
         LOGGER.info("Received request to get customer: {}", customerId);
         try {
@@ -79,7 +79,7 @@ public class CustomerController {
         }
     }
 
-    @GetMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getCustomers() {
         try {
             List<CustomerResponse> customerResponseList = customerService.getCustomers();

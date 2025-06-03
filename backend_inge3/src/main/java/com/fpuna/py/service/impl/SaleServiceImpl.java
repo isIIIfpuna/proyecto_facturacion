@@ -8,7 +8,6 @@ import com.fpuna.py.repository.CustomerRepository;
 import com.fpuna.py.repository.SaleRepository;
 import com.fpuna.py.service.SaleService;
 import com.fpuna.py.util.MethodUtils;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -63,7 +62,7 @@ public class SaleServiceImpl implements SaleService {
             saleResponse.setSaleDate(MethodUtils.convertLocalDateToString(sale.getSaleDate()));
             saleResponse.setCustomerId(sale.getCustomer().getId());
             return saleResponse;
-        }).orElseThrow(() -> new EntityNotFoundException("Venta no encontrado con ID: " + saleId));
+        }).orElse(null);
     }
 
     @Override

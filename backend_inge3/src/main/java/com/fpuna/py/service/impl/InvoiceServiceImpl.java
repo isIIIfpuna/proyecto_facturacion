@@ -83,7 +83,7 @@ public class InvoiceServiceImpl implements InvoiceService {
             invoiceResponse.setInstallmentCount(invoice.getInstallmentCount());
             invoiceResponse.setInstallmentDays(invoice.getInstallmentDays());
             return invoiceResponse;
-        }).orElseThrow(() -> new EntityNotFoundException("Factura no encontrado con ID: " + invoiceId));
+        }).orElse(null);
     }
 
     @Override

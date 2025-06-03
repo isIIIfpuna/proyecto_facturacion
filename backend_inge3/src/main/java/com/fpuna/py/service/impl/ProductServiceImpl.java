@@ -6,7 +6,6 @@ import com.fpuna.py.model.request.ProductUpdateRequest;
 import com.fpuna.py.model.response.ProductResponse;
 import com.fpuna.py.repository.ProductRepository;
 import com.fpuna.py.service.ProductService;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -59,7 +58,7 @@ public class ProductServiceImpl implements ProductService {
             productResponse.setPrice(product.getPrice());
             productResponse.setStock(product.getStock());
             return productResponse;
-        }).orElseThrow(() -> new EntityNotFoundException("Producto no encontrado con ID: " + productId));
+        }).orElse(null);
     }
 
     @Override
