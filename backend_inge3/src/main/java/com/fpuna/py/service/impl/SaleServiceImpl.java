@@ -3,6 +3,7 @@ package com.fpuna.py.service.impl;
 import com.fpuna.py.entity.Sale;
 import com.fpuna.py.model.request.SaleRequest;
 import com.fpuna.py.model.request.SaleUpdateRequest;
+import com.fpuna.py.model.response.CustomerResponse;
 import com.fpuna.py.model.response.SaleResponse;
 import com.fpuna.py.repository.CustomerRepository;
 import com.fpuna.py.repository.SaleRepository;
@@ -60,7 +61,8 @@ public class SaleServiceImpl implements SaleService {
             saleResponse.setPaymentType(sale.getPaymentType());
             saleResponse.setTotalAmount(sale.getTotalAmount());
             saleResponse.setSaleDate(MethodUtils.convertLocalDateToString(sale.getSaleDate()));
-            saleResponse.setCustomerId(sale.getCustomer().getId());
+            saleResponse.setCustomer(new CustomerResponse(sale.getCustomer().getId(), sale.getCustomer().getName(), sale.getCustomer().getCiRuc(),
+                    sale.getCustomer().getEmail(), sale.getCustomer().getPhone(), sale.getCustomer().getAddress()));
             return saleResponse;
         }).orElse(null);
     }
@@ -74,7 +76,8 @@ public class SaleServiceImpl implements SaleService {
             saleResponse.setPaymentType(sale.getPaymentType());
             saleResponse.setTotalAmount(sale.getTotalAmount());
             saleResponse.setSaleDate(MethodUtils.convertLocalDateToString(sale.getSaleDate()));
-            saleResponse.setCustomerId(sale.getCustomer().getId());
+            saleResponse.setCustomer(new CustomerResponse(sale.getCustomer().getId(), sale.getCustomer().getName(), sale.getCustomer().getCiRuc(),
+                    sale.getCustomer().getEmail(), sale.getCustomer().getPhone(), sale.getCustomer().getAddress()));
             saleResponseList.add(saleResponse);
         });
         return saleResponseList;

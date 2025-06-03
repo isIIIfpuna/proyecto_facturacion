@@ -15,8 +15,8 @@ public class SaleResponse implements Serializable {
 
     @JsonProperty(value = "sale_id")
     private Integer saleId;
-    @JsonProperty(value = "customer_id")
-    private Integer customerId;
+    @JsonProperty(value = "customer")
+    private CustomerResponse customer;
     @JsonProperty(value = "sale_date")
     private String saleDate;
     @JsonProperty(value = "total_amount")
