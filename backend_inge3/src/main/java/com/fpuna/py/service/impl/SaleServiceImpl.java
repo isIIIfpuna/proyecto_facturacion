@@ -1,5 +1,6 @@
 package com.fpuna.py.service.impl;
 
+import com.fpuna.py.entity.Customer;
 import com.fpuna.py.entity.Sale;
 import com.fpuna.py.model.request.SaleRequest;
 import com.fpuna.py.model.request.SaleUpdateRequest;
@@ -11,6 +12,7 @@ import com.fpuna.py.service.SaleService;
 import com.fpuna.py.util.MethodUtils;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,11 +32,28 @@ public class SaleServiceImpl implements SaleService {
     @Override
     public void createSale(SaleRequest saleRequest) {
         Sale sale = new Sale();
-        sale.setCustomer(customerRepository.findById(saleRequest.getCustomerId()).get());
+        Customer customer = customerRepository.findByEmail(saleRequest.getCustomer().getEmail());
+        if (customer == null) {
+            customer = new Customer();
+            customer.setEmail(saleRequest.getCustomer().getEmail());
+            customer.setName(saleRequest.getCustomer().getName());
+            customer.setPhone(saleRequest.getCustomer().getPhone());
+            customer.setAddress(saleRequest.getCustomer().getAddress());
+            customer.setCiRuc(saleRequest.getCustomer().getCiRuc());
+            customer.setCreatedAt(Instant.now());
+            customerRepository.save(customer);
+        }
+        sale.setCustomer(customer);
         sale.setSaleDate(LocalDate.now());
         sale.setTotalAmount(saleRequest.getTotalAmount());
         sale.setPaymentType(saleRequest.getPaymentType());
         saleRepository.save(sale);
+
+//        if(saleRequest.getSaleItems() != null) {
+//            for (SaleItemRequest saleItemRequest : saleRequest.getSaleItems()) {
+//                saleItemRequest.get
+//            }
+//        }
     }
 
     @Override
