@@ -24,7 +24,5 @@ public class InstallmentResponse implements Serializable {
     @JsonProperty(value = "due_date")
     private String dueDate;
     private boolean paid;
-    @JsonProperty(value = "payment_date")
-    private String paymentDate;
 }
 

@@ -6,22 +6,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class InstallmentRequest implements Serializable {
 
-    @JsonProperty(value = "invoice_id")
-    private Integer invoiceId;
-    @JsonProperty(value = "installment_number")
-    private Integer installmentNumber;
-    private BigDecimal amount;
-    @JsonProperty(value = "due_date")
-    private String dueDate;
-    private boolean paid;
-    @JsonProperty(value = "payment_date")
-    private String paymentDate;
+    private Integer installments;
+    @JsonProperty(value = "installment_days")
+    private List<Integer> installmentDays;
 }
 

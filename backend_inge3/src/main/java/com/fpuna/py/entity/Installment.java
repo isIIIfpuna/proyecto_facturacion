@@ -11,6 +11,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -25,8 +26,8 @@ public class Installment {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "invoice_id")
-    private Invoice invoice;
+    @JoinColumn(name = "sale_id")
+    private Sale sale;
 
     @NotNull
     @Column(name = "installment_number", nullable = false)

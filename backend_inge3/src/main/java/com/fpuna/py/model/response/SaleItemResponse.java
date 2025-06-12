@@ -17,6 +17,8 @@ public class SaleItemResponse implements Serializable {
     private Integer saleItemId;
     @JsonProperty(value = "product_id")
     private Integer productId;
+    @JsonProperty(value = "product_name")
+    private String productName;
     private Integer quantity;
     @JsonProperty(value = "unit_price")
     private BigDecimal unitPrice;

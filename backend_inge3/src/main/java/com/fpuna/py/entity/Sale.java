@@ -12,8 +12,6 @@ import org.hibernate.annotations.OnDeleteAction;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDate;
-import java.util.LinkedHashSet;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -52,4 +50,12 @@ public class Sale {
     @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "created_at")
     private Instant createdAt;
+
+    @Column(name = "installment_count")
+    private Integer installmentCount;
+
+    @Size(max = 255)
+    @Column(name = "installment_days")
+    private String installmentDays;
+
 }

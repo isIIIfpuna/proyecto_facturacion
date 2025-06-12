@@ -1,7 +1,6 @@
 package com.fpuna.py.model.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fpuna.py.entity.SaleItem;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,5 +23,7 @@ public class SaleRequest implements Serializable {
     private String paymentType;
     @JsonProperty(value = "sale_items")
     private List<SaleItemRequest> saleItems;
+    @JsonProperty(value = "installments")
+    private InstallmentRequest installments;
 }
 

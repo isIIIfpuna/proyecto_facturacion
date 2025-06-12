@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -23,5 +24,11 @@ public class SaleResponse implements Serializable {
     private BigDecimal totalAmount;
     @JsonProperty(value = "payment_type")
     private String paymentType;
+    @JsonProperty(value = "installment_count")
+    private Integer installmentCount;
+    @JsonProperty(value = "installment_days")
+    private List<Integer> installmentDays;
+    @JsonProperty(value = "sale_items")
+    private List<SaleItemResponse> saleItemResponse;
 }
 

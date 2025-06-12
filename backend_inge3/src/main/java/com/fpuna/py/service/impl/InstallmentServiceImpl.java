@@ -20,16 +20,15 @@ public class InstallmentServiceImpl implements InstallmentService {
 
     @Override
     public List<InstallmentResponse> getInstallmentsByInvoice(Integer invoiceId) {
-        List<Installment> installments = installmentRepository.findByInvoiceId(invoiceId);
+        List<Installment> installments = installmentRepository.findBySaleId(invoiceId);
         return installments.stream()
                 .map(inst -> new InstallmentResponse(
                         inst.getId(),
-                        inst.getInvoice().getId(),
+                        inst.getSale().getId(),
                         inst.getInstallmentNumber(),
                         inst.getAmount(),
                         MethodUtils.convertLocalDateToString(inst.getDueDate()),
-                        inst.getPaid(),
-                        MethodUtils.convertLocalDateToString(inst.getPaymentDate())))
+                        inst.getPaid()))
                 .toList();
     }
 }
