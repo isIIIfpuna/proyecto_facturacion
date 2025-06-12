@@ -20,7 +20,7 @@
     <table class="table table-bordered table-striped table-hover bg-white text-dark align-middle">
         <thead class="table-secondary">
         <tr>
-            <th>ID PEDIDO</th>
+            <th>ID VENTA</th>
             <th>NOMBRE CLIENTE</th>
             <th>TOTAL</th>
             <th>FECHA</th>
@@ -52,7 +52,7 @@
                 fila.innerHTML = `
             <td>${venta.sale_id}</td>
             <td>${venta.customer.name}</td>
-            <td>${venta.total_amount}</td>
+            <td>${venta.total_amount.toLocaleString('es-PY')} Gs.</td>
             <td>${formatearFecha(venta.sale_date)}</td>
             <td>
               <i class="fa-solid fa-trash" title="Eliminar" onclick="eliminarPedido(${venta.sale_id})" style="cursor:pointer; color: #dc3545;"></i>
