@@ -106,9 +106,13 @@
             <h5>Total General: <span id="totalGeneral">0</span> Gs</h5>
         </div>
 
-        <div class="d-flex justify-content-between">
-            <button class="btn btn-secondary" onclick="window.location.href='listar-ventas.html'">Atrás</button>
-            <button class="btn btn-success" type="submit">Guardar</button>
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="justify-content-between">
+                <button class="btn btn-secondary" onclick="window.location.href='listar-ventas.html'">Atrás</button>
+            </div>
+            <div class="justify-content-between">
+                <button class="btn btn-success" type="submit">Guardar</button>
+            </div>
         </div>
     </form>
 </div>
@@ -308,6 +312,7 @@
                         <option value="">Seleccione Producto</option>
                     </select>
                 </td>
+                <input type="number" class="form-control sale_id" hidden="true"/>
                 <td><input type="number" class="form-control precio" required step="0.01" min="0"/></td>
                 <td><input type="number" class="form-control cantidad" required value="0" min="0"/></td>
                 <td><input type="text" class="form-control total" required readonly data-raw="0"/></td>
@@ -331,6 +336,7 @@
                     const select = fila.querySelector(".producto-selector");
                     const precioInput = fila.querySelector(".precio");
                     const cantidadInput = fila.querySelector(".cantidad");
+                    const saleId = fila.querySelector(".sale_id");
 
                     // Establecer el valor del select
                     $(select).val(item.product_id).trigger("change");
@@ -338,6 +344,7 @@
                     // Establecer precios y cantidades
                     precioInput.value = item.unit_price;
                     cantidadInput.value = item.quantity;
+                    saleId.value = item.sale_item_id;
 
                     // Calcular total de esa fila
                     calcularTotalFila(fila);
@@ -452,12 +459,14 @@
             const productos = [];
             document.querySelectorAll("#tablaProductos tbody tr").forEach(fila => {
                 const producto = fila.querySelector(".producto-selector").value.trim();
+                const sale_id = fila.querySelector(".sale_id");
                 const cantidad = parseInt(fila.querySelector(".cantidad").value) || 0;
                 const precio = parseFloat(fila.querySelector(".precio").value) || 0;
                 const subtotal = cantidad * precio;
 
                 if (producto && cantidad > 0 && precio >= 0) {
                     productos.push({
+                        sale_item_id: sale_id ? parseInt(sale_id.value) : null,
                         product_id: parseInt(producto),
                         quantity: cantidad,
                         unit_price: precio,
@@ -468,22 +477,26 @@
 
             const totalGeneral = parseFloat(document.getElementById("totalGeneral").textContent.replace(/\./g, "")) || 0;
 
-            const payload = {
-                customer,
-                sale_date: new Date().toISOString(),
-                total_amount: totalGeneral,
-                payment_type: tipoPago === "credito" ? "CR" : "CO",
-                sale_items: productos,
-                installments: installments
-            };
+            const urlParams = new URLSearchParams(window.location.search);
+            const ventaId = urlParams.get("id");
 
             try {
-                const urlParams = new URLSearchParams(window.location.search);
-                const ventaId = urlParams.get("id");
+                const payload = {
+                    customer,
+                    sale_date: new Date().toISOString(),
+                    total_amount: totalGeneral,
+                    payment_type: tipoPago === "credito" ? "CR" : "CO",
+                    installments: installments
+                };
+                if (ventaId) {
+                    payload.sale_id = ventaId;
+                    payload.sale_items_update = productos;
+                } else {
+                    payload.sale_items = productos;
+                }
+
                 const method = ventaId ? "PUT" : "POST";
-                const url = ventaId
-                    ? `http://localhost:8080/backend-inge3/sale/${ventaId}`
-                    : `http://localhost:8080/backend-inge3/sale`;
+                const url = `http://localhost:8080/backend-inge3/sale`;
 
                 const res = await fetch(url, {
                     method,

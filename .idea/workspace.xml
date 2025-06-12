@@ -7,9 +7,6 @@
     <list default="true" id="b3642bc1-5982-49e9-b854-cebca1c31163" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/form-ventas.html" beforeDir="false" afterPath="$PROJECT_DIR$/form-ventas.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/listar-ventas.html" beforeDir="false" afterPath="$PROJECT_DIR$/listar-ventas.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/venta-detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/venta-detail.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,11 +81,6 @@
       <option name="filePath" />
       <method v="2" />
     </configuration>
-    <configuration default="true" type="Application" factoryName="Application">
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration default="true" type="JetRunConfigurationType">
       <module name="proyecto_facturacion_front" />
       <method v="2">
@@ -99,6 +91,11 @@
       <module name="proyecto_facturacion_front" />
       <option name="filePath" />
       <method v="2" />
+    </configuration>
+    <configuration default="true" type="NimRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="nim.task.build.to.cache" enabled="true" />
+      </method>
     </configuration>
   </component>
   <component name="SharedIndexes">
@@ -121,7 +118,8 @@
       <workItem from="1749308564165" duration="16914000" />
       <workItem from="1749578251201" duration="1709000" />
       <workItem from="1749682974713" duration="3669000" />
-      <workItem from="1749692729901" duration="6684000" />
+      <workItem from="1749692729901" duration="7030000" />
+      <workItem from="1749734106618" duration="3851000" />
     </task>
     <servers />
   </component>
