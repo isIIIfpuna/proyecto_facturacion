@@ -10,9 +10,9 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class InvoiceUpdateRequest extends InvoiceRequest implements Serializable {
+public class SaleItemUpdateRequest extends SaleItemRequest implements Serializable {
 
-    @JsonProperty(value = "invoice_id")
-    private Integer invoiceId;
+    @JsonProperty(value = "sale_item_id")
+    private Integer saleItemId;
 }
 

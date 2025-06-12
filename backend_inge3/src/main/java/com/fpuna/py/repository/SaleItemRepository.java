@@ -1,6 +1,5 @@
 package com.fpuna.py.repository;
 
-import com.fpuna.py.entity.Customer;
 import com.fpuna.py.entity.SaleItem;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;

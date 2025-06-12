@@ -4,6 +4,7 @@ import com.fpuna.py.entity.Customer;
 import com.fpuna.py.entity.Sale;
 import com.fpuna.py.entity.SaleItem;
 import com.fpuna.py.model.request.SaleItemRequest;
+import com.fpuna.py.model.request.SaleItemUpdateRequest;
 import com.fpuna.py.model.request.SaleRequest;
 import com.fpuna.py.model.request.SaleUpdateRequest;
 import com.fpuna.py.model.response.CustomerResponse;
@@ -85,7 +86,39 @@ public class SaleServiceImpl implements SaleService {
         saleRepository.findById(saleUpdateRequest.getSaleId()).ifPresent(sale -> {
             sale.setPaymentType(saleUpdateRequest.getPaymentType());
             sale.setTotalAmount(saleUpdateRequest.getTotalAmount());
+            sale.setCustomer(sale.getCustomer());
+            sale.setSaleDate(LocalDate.now());
+            sale.setId(saleUpdateRequest.getSaleId());
+            sale.setInstallmentCount(saleUpdateRequest.getInstallments().getInstallments());
+            if (saleUpdateRequest.getInstallments().getInstallmentDays() != null && !saleUpdateRequest.getInstallments().getInstallmentDays().isEmpty()) {
+                String days = saleUpdateRequest.getInstallments().getInstallmentDays().stream()
+                        .map(String::valueOf)
+                        .collect(Collectors.joining(","));
+                sale.setInstallmentDays(days);
+            }
             saleRepository.save(sale);
+            if (Objects.nonNull(saleUpdateRequest.getSaleItemUpdateList())) {
+                for (SaleItemUpdateRequest saleItemUpdateRequest : saleUpdateRequest.getSaleItemUpdateList()) {
+                    if (Objects.nonNull(saleItemUpdateRequest.getSaleItemId())) {
+                        SaleItem saleItem = saleItemRepository.findById(saleItemUpdateRequest.getSaleItemId()).get();
+                        saleItem.setId(saleItemUpdateRequest.getSaleItemId());
+                        saleItem.setSale(sale);
+                        saleItem.setQuantity(saleItemUpdateRequest.getQuantity());
+                        saleItem.setSubtotal(saleItemUpdateRequest.getSubtotal());
+                        saleItem.setUnitPrice(saleItemUpdateRequest.getUnitPrice());
+                        saleItem.setProduct(productRepository.findById(saleItemUpdateRequest.getProductId()).get());
+                        saleItemRepository.save(saleItem);
+                    } else {
+                        SaleItem saleItem = new SaleItem();
+                        saleItem.setSale(sale);
+                        saleItem.setQuantity(saleItemUpdateRequest.getQuantity());
+                        saleItem.setSubtotal(saleItemUpdateRequest.getSubtotal());
+                        saleItem.setUnitPrice(saleItemUpdateRequest.getUnitPrice());
+                        saleItem.setProduct(productRepository.findById(saleItemUpdateRequest.getProductId()).get());
+                        saleItemRepository.save(saleItem);
+                    }
+                }
+            }
         });
     }
 

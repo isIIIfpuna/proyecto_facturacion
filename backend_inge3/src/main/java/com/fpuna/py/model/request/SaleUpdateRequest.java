@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -14,5 +15,7 @@ public class SaleUpdateRequest extends SaleRequest implements Serializable {
 
     @JsonProperty(value = "sale_id")
     private Integer saleId;
+    @JsonProperty(value = "sale_items_update")
+    private List<SaleItemUpdateRequest> saleItemUpdateList;
 }
 

@@ -34,30 +34,6 @@ CREATE TABLE public.products (
                                  CONSTRAINT products_pkey PRIMARY KEY (product_id)
 );
 
-
--- public.invoices definition
-
--- Drop table
-
--- DROP TABLE public.invoices;
-
-CREATE TABLE public.invoices (
-                                 invoice_id serial4 NOT NULL,
-                                 customer_id int4 NULL,
-                                 "date" date NOT NULL,
-                                 total_amount numeric(10, 2) NOT NULL,
-                                 payment_type varchar(2) NOT NULL,
-                                 installment_count int4 NULL,
-                                 installment_days varchar(255) NULL,
-                                 status varchar(20) DEFAULT 'PENDING'::character varying NULL,
-                                 created_at timestamp DEFAULT CURRENT_TIMESTAMP NULL,
-                                 CONSTRAINT invoices_payment_type_check CHECK (((payment_type)::text = ANY (ARRAY[('CO'::character varying)::text, ('CR'::character varying)::text]))),
-	CONSTRAINT invoices_pkey PRIMARY KEY (invoice_id),
-	CONSTRAINT invoices_status_check CHECK (((status)::text = ANY (ARRAY[('PENDING'::character varying)::text, ('PAID'::character varying)::text, ('CANCELLED'::character varying)::text]))),
-	CONSTRAINT invoices_customer_id_fkey FOREIGN KEY (customer_id) REFERENCES public.customers(customer_id) ON DELETE CASCADE
-);
-
-
 -- public.sales definition
 
 -- Drop table
