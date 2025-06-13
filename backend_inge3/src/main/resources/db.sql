@@ -34,6 +34,7 @@ CREATE TABLE public.products (
                                  CONSTRAINT products_pkey PRIMARY KEY (product_id)
 );
 
+
 -- public.sales definition
 
 -- Drop table
@@ -50,9 +51,9 @@ CREATE TABLE public.sales (
                               created_at timestamp DEFAULT CURRENT_TIMESTAMP NULL,
                               installment_count int4 NULL,
                               installment_days varchar(255) NULL,
-                              CONSTRAINT sales_payment_type_check CHECK (((payment_type)::text = ANY ((ARRAY['CO'::character varying, 'CR'::character varying])::text[]))),
+                              CONSTRAINT sales_payment_type_check CHECK (((payment_type)::text = ANY (ARRAY[('CO'::character varying)::text, ('CR'::character varying)::text]))),
 	CONSTRAINT sales_pkey PRIMARY KEY (sale_id),
-	CONSTRAINT sales_status_check CHECK (((status)::text = ANY ((ARRAY['COMPLETED'::character varying, 'CANCELLED'::character varying, 'PENDING'::character varying])::text[]))),
+	CONSTRAINT sales_status_check CHECK (((status)::text = ANY (ARRAY[('COMPLETED'::character varying)::text, ('CANCELLED'::character varying)::text, ('PENDING'::character varying)::text]))),
 	CONSTRAINT sales_customer_id_fkey FOREIGN KEY (customer_id) REFERENCES public.customers(customer_id) ON DELETE SET NULL
 );
 
@@ -79,9 +80,7 @@ CREATE TABLE public.installments (
                                      paid bool DEFAULT false NULL,
                                      payment_date date NULL,
                                      created_at timestamp DEFAULT CURRENT_TIMESTAMP NULL,
-                                     invoice_id int4 NULL,
                                      CONSTRAINT installments_pkey PRIMARY KEY (installment_id),
-                                     CONSTRAINT fkm6qa6od3bn83buqut2l3mxu6k FOREIGN KEY (invoice_id) REFERENCES public.invoices(invoice_id) ON DELETE CASCADE,
                                      CONSTRAINT installments_sale_id_fkey FOREIGN KEY (sale_id) REFERENCES public.sales(sale_id) ON DELETE CASCADE
 );
 
@@ -105,12 +104,10 @@ CREATE TABLE public.sale_items (
 );
 
 
--- ============================================
--- FUNCTION AND TRIGGER
--- ============================================
-
-CREATE OR REPLACE FUNCTION generar_cuotas()
-RETURNS TRIGGER AS $$
+CREATE OR REPLACE FUNCTION public.generar_cuotas()
+ RETURNS trigger
+ LANGUAGE plpgsql
+AS $function$
 DECLARE
 cuota_monto NUMERIC(10, 2);
     cuota_fecha DATE;
@@ -128,17 +125,18 @@ INSERT INTO installments (sale_id, installment_number, amount, due_date)
 VALUES (NEW.sale_id, i, cuota_monto, cuota_fecha);
 END LOOP;
 ELSE
-            -- Vencimiento irregular
-            v_dias_cuotas := NEW.installment_days;
+        -- Vencimiento irregular
+        v_dias_cuotas := NEW.installment_days;
 
 FOR i IN 1..NEW.installment_count LOOP
-                v_dia := (STRING_TO_ARRAY(v_dias_cuotas, ','))[i]::INTEGER;
 
-                IF v_dia IS NULL THEN
-                    EXIT;
+			v_dia := (STRING_TO_ARRAY(v_dias_cuotas, ','))[i]::INTEGER;
+
+            IF v_dia IS NULL THEN
+                EXIT;
 END IF;
 
-		        cuota_fecha := NEW.sale_date + v_dia;
+	        cuota_fecha := NEW.sale_date + v_dia;
 
 INSERT INTO installments (sale_id, installment_number, amount, due_date)
 VALUES (NEW.sale_id, i, cuota_monto, cuota_fecha);
@@ -148,9 +146,11 @@ END IF;
 
 RETURN NEW;
 END;
-$$ LANGUAGE plpgsql;
+$function$
+;
 
 CREATE TRIGGER trigger_generar_cuotas
-    AFTER INSERT ON invoices
+    AFTER INSERT ON sales
     FOR EACH ROW
     EXECUTE FUNCTION generar_cuotas();
+
